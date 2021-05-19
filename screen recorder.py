@@ -1,19 +1,31 @@
 import pyautogui
 import cv2
 import numpy as np
+import os
 
 print('started')
 
 resolution = (1920, 1080)
-
 _ = cv2.VideoWriter_fourcc(*'XVID')
 
-filename = "screen_record.avi"
+
+def filename():
+    file_name = "screen_record.avi"
+    path = os.getcwd() + '\\' + file_name
+    file, extension = os.path.splitext(path)
+    counter = 1
+
+    while os.path.exists(path):
+        path = "screen_record_" + str(counter) + extension
+        counter += 1
+
+    return path
+
 
 rate = 5
 
 # Creating a VideoWriter object
-out = cv2.VideoWriter(filename, _, rate, resolution)
+out = cv2.VideoWriter(filename(), _, rate, resolution)
 
 cv2.namedWindow("Screen recorder", cv2.WINDOW_NORMAL)
 
